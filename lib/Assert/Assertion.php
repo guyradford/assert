@@ -267,6 +267,30 @@ class Assertion
     }
 
     /**
+     * @param string $assertionClass
+     */
+    public static function setAssertionClass($assertionClass)
+    {
+        self::$assertionClass = $assertionClass;
+    }
+
+    /**
+     * @param string $chainClass
+     */
+    public static function setChainClass($chainClass)
+    {
+        self::$chainClass = $chainClass;
+    }
+
+    /**
+     * @param string $lazyClass
+     */
+    public static function setLazyClass($lazyClass)
+    {
+        self::$lazyClass = $lazyClass;
+    }
+
+    /**
      * Assert that two values are equal (using == ).
      *
      * @param mixed $value
