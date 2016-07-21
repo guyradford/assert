@@ -36,7 +36,8 @@ if ( ! function_exists(__NAMESPACE__ . '\that')) {
 	 */
 	function that($value, $defaultMessage = null, $defaultPropertyPath = null)
 	{
-	    return new AssertionChain($value, $defaultMessage, $defaultPropertyPath);
+	    $chainClass = Assertion::getChainClass();
+	    return new $chainClass($value, $defaultMessage, $defaultPropertyPath);
 	}
 }
 
@@ -72,6 +73,7 @@ if ( ! function_exists(__NAMESPACE__ . '\lazy')) {
 	 */
 	function lazy()
 	{
-	    return new LazyAssertion();
+	    $lazyClass = Assertion::getLazyClass();
+	    return new $lazyClass();
 	}
 }

@@ -211,6 +211,51 @@ class Assertion
     static protected $exceptionClass = 'Assert\InvalidArgumentException';
 
     /**
+     * Assertion class name.
+     *
+     * @var string
+     */
+    static protected $assertionClass = 'Assert\Assertion';
+
+    /**
+     * AssertionChain class name.
+     *
+     * @var string
+     */
+    static protected $chainClass = 'Assert\AssertionChain';
+
+    /**
+     * Lazy Assertion class name.
+     *
+     * @var string
+     */
+    static protected $lazyClass = 'Assert\LazyAssertion';
+
+    /**
+     * @return string
+     */
+    public static function getAssertionClass()
+    {
+        return static::$assertionClass;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getChainClass()
+    {
+        return static::$chainClass;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getLazyClass()
+    {
+        return static::$lazyClass;
+    }
+
+    /**
      * Helper method that handles building the assertion failure exceptions.
      * They are returned from this method so that the stack trace still shows
      * the assertions method.
