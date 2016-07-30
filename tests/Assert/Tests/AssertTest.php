@@ -493,8 +493,8 @@ class AssertTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('Assert\AssertionFailedException', null, Assertion::INVALID_URL);
 
         Assertion::url($url);
-    }
 
+    }
     public static function dataInvalidUrl()
     {
         return array(
@@ -524,8 +524,53 @@ class AssertTest extends \PHPUnit_Framework_TestCase
             'Http with port' => array("http://example.org:8080"),
             'Http with all possibilities' => array("http://example.org:8080/do/something/index.php?do=something"),
             'straight with Https' => array("https://example.org"),
+            'localhost' => array("https://localhost"),
         );
     }
+    
+    /**
+     * @dataProvider dataInvalidUrl_with_protocols_passed_in
+     */
+    public function testInvalidUrl_with_protocols_passed_in($url)
+    {
+        $this->setExpectedException('Assert\AssertionFailedException', null, Assertion::INVALID_URL);
+
+        Assertion::url($url, null, null, ['http', 'https', 'file']);
+    }
+    
+    public static function dataInvalidUrl_with_protocols_passed_in()
+    {
+        return array(
+            'null value' => array(""),
+            'empty string' => array(" "),
+            'no scheme' => array("url.de"),
+            'unsupported scheme' => array("git://url.de"),
+            'Http with query (no / between tld und ?)' => array("http://example.org?do=something"),
+            'Http with query and port (no / between port und ?)' => array("http://example.org:8080?do=something"),
+        );
+    }
+
+    /**
+     * @dataProvider dataValidUrl_with_protocols_passed_in
+     */
+    public function testValidUrl_with_protocols_passed_in($url)
+    {
+        Assertion::url($url, null, null, ['http', 'https', 'file']);
+    }
+
+    public static function dataValidUrl_with_protocols_passed_in()
+    {
+        return array(
+            'straight with Http' => array("http://example.org"),
+            'Http with path' => array("http://example.org/do/something"),
+            'Http with query' => array("http://example.org/index.php?do=something"),
+            'Http with port' => array("http://example.org:8080"),
+            'Http with all possibilities' => array("http://example.org:8080/do/something/index.php?do=something"),
+            'straight with Https' => array("https://example.org"),
+            'straight with file protocol' => array("file://folder/file.ext"),
+        );
+    }
+    
 
     public function testInvalidDigit()
     {

@@ -1263,6 +1263,7 @@ class Assertion
      * @param mixed $value
      * @param string|null $message
      * @param string|null $propertyPath
+     * @param array $protocols
      * @return void
      * @throws \Assert\AssertionFailedException
      *
@@ -1270,16 +1271,16 @@ class Assertion
      * @link https://github.com/symfony/Validator/blob/master/Constraints/UrlValidator.php
      * @link https://github.com/symfony/Validator/blob/master/Constraints/Url.php
      */
-    public static function url($value, $message = null, $propertyPath = null)
+    public static function url($value, $message = null, $propertyPath = null, $protocols = array('http', 'https'))
     {
         static::string($value, $message, $propertyPath);
 
-        $protocols = array('http', 'https');
+//        $protocols = array('http', 'https');
 
         $pattern = '~^
             (%s)://                                 # protocol
             (
-                ([\pL\pN\pS-]+\.)+[\pL]+                   # a domain name
+                ([\pL\pN\pS-\.])+(\.?([\pL]|xn\-\-[\pL\pN-]+)+\.?) # a domain name
                     |                                     #  or
                 \d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}      # a IP address
                     |                                     #  or
